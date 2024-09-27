@@ -12,8 +12,8 @@ SRC_URI = " \
 	file://examples \
 	file://FW.bin \
 	file://pev.ini \
-	file://spi_sta_config.bin \
-	file://spi_cco_config.bin \
+	file://spi_evse_config.bin \
+	file://spi_ev_config.bin \
 "
 
 RDEPENDS:${PN}:append = "libgpiod (<= 2.0.0)"
@@ -38,12 +38,11 @@ do_install() {
 	cp -r ${WORKDIR}/examples/* ${D}/root/examples/
 	find ${D}/root/examples -type f -exec chmod +x {} +
 
-	# Install firmware files
-	install -d ${D}${nonarch_base_libdir}/firmware
-	install -m 0644 ${WORKDIR}/config.bin ${D}${nonarch_base_libdir}/firmware
-	install -m 0644 ${WORKDIR}/spi_sta_config.bin ${D}${nonarch_base_libdir}/firmware
-	install -m 0644 ${WORKDIR}/spi_cco_config.bin ${D}${nonarch_base_libdir}/firmware
-	install -m 0644 ${WORKDIR}/FW.bin ${D}${nonarch_base_libdir}/firmware
+	install -d ${D}/usr/lib/firmware
+	install -m 0644 ${WORKDIR}/config.bin ${D}/usr/lib/firmware
+	install -m 0644 ${WORKDIR}/spi_evse_config.bin ${D}/usr/lib/firmware
+	install -m 0644 ${WORKDIR}/spi_ev_config.bin ${D}/usr/lib/firmware
+	install -m 0644 ${WORKDIR}/FW.bin ${D}/usr/lib/firmware
 }
 
 FILES:${PN} += "${nonarch_base_libdir}/firmware/*"
