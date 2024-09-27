@@ -14,8 +14,8 @@ SRC_URI = " \
 	file://examples \
 	file://FW.bin \
 	file://pev.ini \
-	file://spi_sta_config.bin \
-	file://spi_cco_config.bin \
+	file://spi_evse_config.bin \
+	file://spi_ev_config.bin \
 "
 
 RDEPENDS:${PN} += "libgpiod"
@@ -42,8 +42,8 @@ do_install() {
 
 	install -d ${D}/lib/firmware
 	install -m 0644 ${WORKDIR}/config.bin ${D}/lib/firmware
-	install -m 0644 ${WORKDIR}/spi_sta_config.bin ${D}/lib/firmware
-	install -m 0644 ${WORKDIR}/spi_cco_config.bin ${D}/lib/firmware
+	install -m 0644 ${WORKDIR}/spi_evse_config.bin ${D}/lib/firmware
+	install -m 0644 ${WORKDIR}/spi_ev_config.bin ${D}/lib/firmware
 	install -m 0644 ${WORKDIR}/FW.bin ${D}/lib/firmware
 }
 
