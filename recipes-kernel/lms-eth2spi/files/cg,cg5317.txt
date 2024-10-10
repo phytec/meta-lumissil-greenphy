@@ -15,7 +15,13 @@ Required properties:
                          - gp_irq, must be of type rising edge (mode 1).
 - interrupt-names      : Associated names must be: "gp_irq", "rx_irq"
 - spi-cpha             : Must be set
-- spi-lsb-first        : Must be set
+- spi-lsb-first        : The CG5317 works in LSB first mode.
+                         If the SPI controller used supports LSB first mode, add
+                         this 'spi-lsb-first' node.
+                         If the SPI controller does not support LSB first, do
+                         not add this field!! The lack of this field will indicate
+                         to the Lumissil driver that Software bit reversing is
+                         required.
 - spi-cpol             : Should be set if and only if cg5317 is in SPI MODE 3
 
 Optional properties:
@@ -25,6 +31,14 @@ Optional properties:
                       frequency to 8000000 Hertz.
 - local-mac-address : Can be used to set mac address, if not used,
                       mac address will be set randomly with OUI of Lumissil.
+- iface-name-prefix : Network device interface prefix (default: seth)
+- iface-idx         : Index of interface (default: 0). The name of the network
+                      interface created by the SPI driver shall be a compibation
+                      of "iface-name-prefix"+"iface-idx". for example, the
+                      default interface will be seth0.
+                      The purpose of these two fields is to allow a static
+                      assignment of network interface name when working with
+                      multiple CG5317 modems connected to a single Linux MPU.
 
 SPI Example:
 
@@ -44,6 +58,8 @@ SPI Example:
 		spi-cpha; /* SPI mode: CPHA=1 */
 		spi-lsb-first; /* SPI mode: lsb_first=1 */
 		spi-max-frequency = <8000000>; /* freq: 8 MHz */
+		iface-name-prefix = "seth";
+		iface-idx = <0x0>;
 	};
 };
 
