@@ -16,18 +16,15 @@ SRC_URI = " \
 	file://spi_cco_config.bin \
 "
 
+inherit systemd
+
 RDEPENDS:${PN}:append = "libgpiod (<= 2.0.0)"
 
 do_install() {
 	# Install systemd services
-	install -d ${D}${sysconfdir}/systemd/system/
-	install -m 0644 ${WORKDIR}/cg5317-bringup.service ${D}${sysconfdir}/systemd/system
-	install -m 0644 ${WORKDIR}/cg5317-host.service ${D}${sysconfdir}/systemd/system
-
-	# Enable services for multi-user target
-	install -d ${D}${sysconfdir}/systemd/system/multi-user.target.wants
-	ln -sf ../cg5317-bringup.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/
-	ln -sf ../cg5317-host.service ${D}${sysconfdir}/systemd/system/multi-user.target.wants/
+	install -d ${D}${systemd_system_unitdir}
+	install -m 0644 ${WORKDIR}/cg5317-bringup.service ${D}${systemd_system_unitdir}
+	install -m 0644 ${WORKDIR}/cg5317-host.service ${D}${systemd_system_unitdir}
 
 	# Install configuration files
 	install -m 0644 ${WORKDIR}/evse.ini ${D}${sysconfdir}/
@@ -48,3 +45,6 @@ do_install() {
 
 FILES:${PN} += "${nonarch_base_libdir}/firmware/*"
 FILES:${PN} += "/root/examples"
+FILES:${PN} += "${systemd_unitdir}/**"
+
+SYSTEMD_SERVICE:${PN} = "cg5317-host.service cg5317-bringup.service"
