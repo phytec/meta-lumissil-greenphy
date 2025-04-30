@@ -13,6 +13,16 @@ There are some key items included in this meta-layer.
 
 - **Host Load Services** - firmware loading services that are used on bootup when the lms is in host-load moad.
 
+### Included Image
+This repo includes an that can be used with the standard PHYTEC BSP. The image installs all required software for testing.
+
+#### Depends:
+- PHYTEC Yocto BSP
+
+```bash
+bitbake phytec-lumissil-greenphy-image
+```
+
 # 2 - Testing all Components
 
 1. Check to see if PLC device connected successfully.
