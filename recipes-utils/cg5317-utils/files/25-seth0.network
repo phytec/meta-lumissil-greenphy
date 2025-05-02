@@ -1,0 +1,10 @@
+[Match]
+Name=seth0
+
+[Network]
+DHCP=yes
+LinkLocalAddressing=ipv4
+
+[Link]
+ActivationPolicy=always-up
+MACAddress=
