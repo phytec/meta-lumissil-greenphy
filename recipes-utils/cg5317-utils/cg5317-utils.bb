@@ -4,7 +4,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://../COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 
 SRC_URI = " \
-	file://cg5317-bringup.service \
+	file://25-seth0.network \
 	file://cg5317-host.service \
 	file://COPYING.MIT \
 	file://examples \
@@ -20,8 +20,9 @@ RDEPENDS:${PN}:append = "libgpiod (<= 2.0.0)"
 do_install() {
 	# Install systemd services
 	install -d ${D}${systemd_system_unitdir}
-	install -m 0644 ${WORKDIR}/cg5317-bringup.service ${D}${systemd_system_unitdir}
 	install -m 0644 ${WORKDIR}/cg5317-host.service ${D}${systemd_system_unitdir}
+	install -d ${D}${systemd_unitdir}/network
+	install -m 0644 ${WORKDIR}/25-seth0.network  ${D}${systemd_unitdir}/network/
 
 	# Install examples directory
 	install -d ${D}${ROOT_HOME}/lumissil_examples
@@ -39,4 +40,4 @@ FILES:${PN} += "${nonarch_base_libdir}/firmware/lumissil/*"
 FILES:${PN} += "${ROOT_HOME}/lumissil_examples/**"
 FILES:${PN} += "${systemd_unitdir}/**"
 
-SYSTEMD_SERVICE:${PN} = "cg5317-host.service cg5317-bringup.service"
+SYSTEMD_SERVICE:${PN} = "cg5317-host.service"
