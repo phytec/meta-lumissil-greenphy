@@ -1,6 +1,6 @@
 [Unit]
 Description=cg5317 Host Loading Service
-After=cg5317-bringup.service
+After=network-online.target
 
 [Service]
 User=root
