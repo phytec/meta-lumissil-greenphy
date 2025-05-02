@@ -5,7 +5,8 @@ LIC_FILES_CHKSUM = "file://../COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 
 SRC_URI = " \
 	file://25-seth0.network \
-	file://cg5317-host.service \
+	file://cg5317_0.cfg \
+	file://cg5317-host@.service \
 	file://config.bin \
 	file://COPYING.MIT \
 	file://evse.ini \
@@ -23,9 +24,12 @@ RDEPENDS:${PN}:append = "libgpiod (<= 2.0.0)"
 do_install() {
 	# Install systemd services
 	install -d ${D}${systemd_system_unitdir}
-	install -m 0644 ${WORKDIR}/cg5317-host.service ${D}${systemd_system_unitdir}
+	install -m 0644 ${WORKDIR}/cg5317-host@.service ${D}${systemd_system_unitdir}
 	install -d ${D}${systemd_unitdir}/network
 	install -m 0644 ${WORKDIR}/25-seth0.network  ${D}${systemd_unitdir}/network/
+
+	install -d ${D}${sysconfdir}/lumissil
+	install -m 0644 ${WORKDIR}/cg5317_0.cfg ${D}${sysconfdir}/lumissil/	
 
 	# Install configuration files
 	install -m 0644 ${WORKDIR}/evse.ini ${D}${sysconfdir}/
@@ -47,5 +51,6 @@ do_install() {
 FILES:${PN} += "${nonarch_base_libdir}/firmware/*"
 FILES:${PN} += "/root/examples"
 FILES:${PN} += "${systemd_unitdir}/**"
+FILES:${PN} += "${sysconfdir}/lumissil/*"
 
-SYSTEMD_SERVICE:${PN} = "cg5317-host.service"
+SYSTEMD_SERVICE:${PN} = "cg5317-host@0.service"
