@@ -29,14 +29,14 @@ do_install() {
 	cp -r ${WORKDIR}/examples ${D}${ROOT_HOME}
 	find ${D}${ROOT_HOME}/examples -type f -exec chmod +x {} +
 
-	install -d ${D}/usr/lib/firmware
-	install -m 0644 ${WORKDIR}/spi_evse_config.bin ${D}/usr/lib/firmware
-	install -m 0644 ${WORKDIR}/spi_ev_config.bin ${D}/usr/lib/firmware
-	install -m 0644 ${WORKDIR}/FW.bin ${D}/usr/lib/firmware
+	install -d ${D}${libdir}/firmware
+	install -m 0644 ${WORKDIR}/spi_evse_config.bin ${D}${libdir}/firmware/
+	install -m 0644 ${WORKDIR}/spi_ev_config.bin ${D}${libdir}/firmware/
+	install -m 0644 ${WORKDIR}/FW.bin ${D}${libdir}/firmware/
 }
 
 FILES:${PN} += "${systemd_unitdir}/**"
-FILES:${PN} += "/usr/lib/firmware/*"
+FILES:${PN} += "${libdir}/firmware/*"
 FILES:${PN} += "${ROOT_HOME}/**"
 
 SYSTEMD_SERVICE:${PN} = "cg5317-host.service cg5317-bringup.service"
