@@ -18,8 +18,7 @@ SRC_URI = " \
 
 inherit systemd
 
-# libgpiod_2.x.x deploys libgpiod.so.3
-RDEPENDS:${PN}:append = "libgpiod (<= 2.0.0)"
+RDEPENDS:${PN}:append = "libgpiod (>= 2.0.0)"
 
 do_install() {
 	install -d ${D}${systemd_system_unitdir}
