@@ -19,7 +19,7 @@ SRC_URI = " \
 
 inherit systemd
 
-RDEPENDS:${PN}:append = "libgpiod (<= 2.0.0)"
+RDEPENDS:${PN}:append = "libgpiod (>= 2.0.0)"
 
 do_install() {
 	# Install systemd services
