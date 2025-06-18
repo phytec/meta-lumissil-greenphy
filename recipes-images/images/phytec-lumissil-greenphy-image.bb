@@ -1,4 +1,4 @@
-require recipes-images/images/phytec-headless-image.bb
+include recipes-images/images/phytec-headless-image.bb
 
 SUMMARY = "This image is designed to install all software required for \
 	   the Lumissil Green PHY demo."
