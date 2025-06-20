@@ -1,6 +1,7 @@
 [Unit]
 Description=cg5317 Interface Bringup Service
-After=network.target
+After=network.target sys-subsystem-net-devices-seth0.device
+Wants=sys-subsystem-net-devices-seth0.device
 
 [Service]
 ExecStart=/usr/sbin/ip link set seth0 up
