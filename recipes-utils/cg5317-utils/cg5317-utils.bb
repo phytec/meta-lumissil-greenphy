@@ -36,20 +36,20 @@ do_install() {
 	install -m 0644 ${WORKDIR}/pev.ini ${D}${sysconfdir}/
 
 	# Install examples directory
-	install -d ${D}/root/examples
-	cp -r ${WORKDIR}/examples/* ${D}/root/examples/
-	find ${D}/root/examples -type f -exec chmod +x {} +
+	install -d ${D}${ROOT_HOME}
+	cp -r ${WORKDIR}/lumissil_examples ${D}${ROOT_HOME}
+	find ${D}${ROOT_HOME}/lumissil_examples -type f -exec chmod +x {} +
 
 	# Install firmware files
-	install -d ${D}${nonarch_base_libdir}/firmware
-	install -m 0644 ${WORKDIR}/config.bin ${D}${nonarch_base_libdir}/firmware
-	install -m 0644 ${WORKDIR}/spi_sta_config.bin ${D}${nonarch_base_libdir}/firmware
-	install -m 0644 ${WORKDIR}/spi_cco_config.bin ${D}${nonarch_base_libdir}/firmware
-	install -m 0644 ${WORKDIR}/FW.bin ${D}${nonarch_base_libdir}/firmware
+	install -d ${D}${nonarch_base_libdir}/firmware/lumissil
+	install -m 0644 ${WORKDIR}/config.bin ${D}${nonarch_base_libdir}/firmware/lumissil/
+	install -m 0644 ${WORKDIR}/spi_sta_config.bin ${D}${nonarch_base_libdir}/firmware/lumissil/
+	install -m 0644 ${WORKDIR}/spi_cco_config.bin ${D}${nonarch_base_libdir}/firmware/lumissil/
+	install -m 0644 ${WORKDIR}/FW.bin ${D}${nonarch_base_libdir}/firmware/lumissil/
 }
 
-FILES:${PN} += "${nonarch_base_libdir}/firmware/*"
-FILES:${PN} += "/root/examples"
+FILES:${PN} += "${nonarch_base_libdir}/firmware/lumissil"
+FILES:${PN} += "${ROOT_HOME}/lumissil_examples"
 FILES:${PN} += "${systemd_unitdir}/**"
 FILES:${PN} += "${sysconfdir}/lumissil/*"
 

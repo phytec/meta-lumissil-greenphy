@@ -7,7 +7,7 @@ EnvironmentFile=/etc/lumissil/cg5317_%i.cfg
 User=root
 Group=root
 Type=forking
-ExecStart=/root/examples/host_loading_service/host_loading_service ${RMII_FLAG} \
+ExecStart=/root/lumissil_examples/host_loading_service/host_loading_service ${RMII_FLAG} \
                                         -f ${FW_PATH} \
                                         -c ${CFG_PATH} \
                                         -s ${SPI_IFNAME} \
