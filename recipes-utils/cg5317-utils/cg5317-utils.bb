@@ -24,19 +24,19 @@ do_install() {
 	install -m 0644 ${WORKDIR}/cg5317-host.service ${D}${systemd_system_unitdir}
 
 	# Install examples directory
-	install -d ${D}/root/examples
-	cp -r ${WORKDIR}/examples/* ${D}/root/examples/
-	find ${D}/root/examples -type f -exec chmod +x {} +
+	install -d ${D}${ROOT_HOME}/lumissil_examples
+	cp -r ${WORKDIR}/examples/* ${D}${ROOT_HOME}/lumissil_examples/
+	find ${D}${ROOT_HOME}/lumissil_examples -type f -exec chmod +x {} +
 
 	# Install firmware files
-	install -d ${D}${nonarch_base_libdir}/firmware
-	install -m 0644 ${WORKDIR}/spi_evse_config.bin ${D}${nonarch_base_libdir}/firmware
-	install -m 0644 ${WORKDIR}/spi_ev_config.bin ${D}${nonarch_base_libdir}/firmware
-	install -m 0644 ${WORKDIR}/FW.bin ${D}${nonarch_base_libdir}/firmware
+	install -d ${D}${nonarch_base_libdir}/firmware/lumissil
+	install -m 0644 ${WORKDIR}/spi_evse_config.bin ${D}${nonarch_base_libdir}/firmware/lumissil/
+	install -m 0644 ${WORKDIR}/spi_ev_config.bin ${D}${nonarch_base_libdir}/firmware/lumissil/
+	install -m 0644 ${WORKDIR}/FW.bin ${D}${nonarch_base_libdir}/firmware/lumissil/
 }
 
-FILES:${PN} += "${nonarch_base_libdir}/firmware/*"
-FILES:${PN} += "/root/examples"
+FILES:${PN} += "${nonarch_base_libdir}/firmware/lumissil/*"
+FILES:${PN} += "${ROOT_HOME}/lumissil_examples/**"
 FILES:${PN} += "${systemd_unitdir}/**"
 
 SYSTEMD_SERVICE:${PN} = "cg5317-host.service cg5317-bringup.service"
