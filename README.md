@@ -97,43 +97,58 @@ At this point, the hardware is configured and the PLC device is ready for applic
 
 ## Host Services
 
-The system includes two systemd services that handle device initialization:
+The system includes a systemd services and a systemd network configuration that
+handle device initialization:
 
 ### Service Status Check
 
 ```bash
-systemctl status cg5317-bringup
-systemctl status cg5317-host
+systemctl networkctl status seth0
+systemctl status cg5317-host@0
 ```
 
-### cg5317-bringup Service
+### seth0.network Config
 
 Brings up the `seth0` network interface during system startup.
 
 **Expected Status:**
 ```bash
-root@phyboard-lyra-am62xx-3:~# systemctl status cg5317-bringup
-● cg5317-bringup.service - cg5317 Interface Bringup Service
-     Loaded: loaded (/etc/systemd/system/cg5317-bringup.service; enabled; preset: disabled)
-     Active: inactive (dead) since Fri 2025-06-20 17:55:39 UTC; 1min 7s ago
-    Process: 221 ExecStart=/usr/sbin/ip link set seth0 up (code=exited, status=0/SUCCESS)
-   Main PID: 221 (code=exited, status=0/SUCCESS)
+root@phyboard-lyra-am62xx-3:~# networkctl status seth0
+* 4: seth0
+                   Link File: /usr/lib/systemd/network/99-default.link
+                Network File: /usr/lib/systemd/network/25-seth0.network
+                       State: degraded (configured)
+                Online state: online                                               
+                        Type: ether
+                        Path: platform-20100000.spi-cs-0
+                      Driver: lms_eth2spi
+            Hardware Address: 00:16:E8:00:00:02
+                         MTU: 1500 (min: 46, max: 1500)
+                       QDisc: pfifo_fast
+IPv6 Address Generation Mode: none
+    Number of Queues (Tx/Rx): 1/1
+                     Address: 169.254.187.93
+           Activation Policy: always-up
+         Required For Online: yes
 ```
 
-### cg5317-host Service
+### cg5317-host@ Service
 
-Handles firmware loading and device initialization. Runs continuously to monitor device status.
+Handles firmware loading and device initialization, instantiable, and
+configurable via ```/etc/lumissil/cg5317_0.cfg```. Runs continuously to monitor device
+status.
 
 **Expected Status:**
 ```bash
-root@phyboard-lyra-am62xx-3:~# systemctl status cg5317-host
-● cg5317-host.service - cg5317 Host Loading Service
-     Loaded: loaded (/etc/systemd/system/cg5317-host.service; enabled; preset: disabled)
-     Active: active (running) since Fri 2025-06-20 17:55:40 UTC; 1min 13s ago
-     Main PID: 237 (host_loading_se)
+root@phyboard-lyra-am62xx-3:~# systemctl status cg5317-host@0
+* cg5317-host@0.service - CG5317_0 Host FW Loading
+     Loaded: loaded (/usr/lib/systemd/system/cg5317-host@.service; enabled; preset: disabled)
+     Active: active (running) since Thu 2025-12-04 12:15:22 UTC; 50s ago
+    Process: 251 ExecStart=/root/lumissil_examples/host_loading_service/host_loading_service ${RMII_FLAG} -f ${FW_PATH} -c ${CFG_PATH} -s ${SPI_IFNAME} -e ${ETH_IFNAME} -g ${CG_RESET_GPIO_CHIP} -o ${CG_RESET_GPIO_OFFSET} (code=exited, status=0/SUCCESS)
+   Main PID: 253 (host_loading_se)
       Tasks: 2 (limit: 2086)
-     Memory: 1.1M (peak: 1.5M)
-        CPU: 269ms
+     Memory: 988.0K (peak: 1.4M)
+        CPU: 252ms
 ```
 
 **Key Log Messages:**
@@ -146,14 +161,15 @@ root@phyboard-lyra-am62xx-3:~# systemctl status cg5317-host
 
 ### Management Tool
 
-The included management tool allows communication with connected PLC devices. Cross-compiled binaries are located in `/examples/`.
+The included management tool allows communication with connected PLC devices.
+Cross-compiled binaries are located in `/lumissil_examples/`.
 
 ### Device Information Query
 
 To retrieve device information, use the management tool with the device's MAC address:
 
 ```bash
-./examples/management_tool/management_tool -a `cat /sys/class/net/seth0/address` -c "device_info 3"
+./lumissil_examples/management_tool/management_tool -a `cat /sys/class/net/seth0/address` -c "device_info 3"
 ```
 
 **Successful Response Example:**
@@ -187,8 +203,8 @@ command: 'device_info 3' finished successfully
 - Check `dmesg` for SPI errors
 
 **Service failures:**
-- Restart services: `systemctl restart cg5317-host`
-- Check service logs: `journalctl -u cg5317-host -f`
+- Restart services: `systemctl restart cg5317-host@0`
+- Check service logs: `journalctl -u cg5317-host@0 -f`
 
 **Communication timeouts:**
 - Verify correct MAC address
@@ -201,4 +217,4 @@ https://www.lumissil.com/applications/communication/electric-vehicles-charging/v
 
 ### SDK Information
 
-Binaries were cross-compiled using the [Phytec SDK](https://download.phytec.de/Software/Linux/BSP-Yocto-AM62x/BSP-Yocto-Ampliphy-AM62x-PD23.2.0/sdk/ampliphy-xwayland/).
+Binaries were cross-compiled using the [Phytec SDK](https://download.phytec.de/Software/Linux/BSP-Yocto-AM62x/BSP-Yocto-Ampliphy-AM62x-PD24.1.2/sdk/ampliphy/).
