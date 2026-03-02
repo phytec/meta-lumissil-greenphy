@@ -43,9 +43,12 @@ do_install() {
 	install -m 0644 ${UNPACKDIR}/FW.bin ${D}${nonarch_base_libdir}/firmware/lumissil/
 }
 
-FILES:${PN} += "${nonarch_base_libdir}/firmware/lumissil/*"
-FILES:${PN} += "${ROOT_HOME}/lumissil_examples/**"
-FILES:${PN} += "${systemd_unitdir}/**"
-FILES:${PN} += "${sysconfdir}/lumissil/*"
+FILES:${PN} += " \
+	${nonarch_base_libdir}/firmware/lumissil/* \
+	${ROOT_HOME}/lumissil_examples/* \
+	${systemd_system_unitdir}/cg5317-host@.service \
+	${systemd_unitdir}/network/25-seth0.network \
+	${sysconfdir}/lumissil/* \
+"
 
 SYSTEMD_SERVICE:${PN} = "cg5317-host@0.service"
