@@ -6,7 +6,7 @@ PACKAGE_STRIP = "no"
 
 RM_WORK_EXCLUDE += "${PN}"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 SRC_URI = "git://github.com/qca/open-plc-utils.git;protocol=https;branch=master \
 	   file://0001-slac-fix-cm_mnbc_sound_indicate-not-according-to-spe.patch \
@@ -31,8 +31,8 @@ do_install() {
 	install -m 0755 slac/pev ${D}${bindir}
 
 	install -d ${D}${sysconfdir}
-	install -m 0644 ${WORKDIR}/pev.ini ${D}${sysconfdir}/pev.ini
-	install -m 0644 ${WORKDIR}/evse.ini ${D}${sysconfdir}/evse.ini
+	install -m 0644 ${UNPACKDIR}/pev.ini ${D}${sysconfdir}/pev.ini
+	install -m 0644 ${UNPACKDIR}/evse.ini ${D}${sysconfdir}/evse.ini
 }
 
 inherit pkgconfig

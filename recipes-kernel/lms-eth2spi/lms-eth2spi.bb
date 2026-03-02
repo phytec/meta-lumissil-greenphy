@@ -13,7 +13,7 @@ SRC_URI = " \
 "
 
 RM_WORK_EXCLUDE += "${PN}"
-S = "${WORKDIR}"
+S = "${UNPACKDIR}"
 
 KERNEL_MODULE_AUTOLOAD += "${MODULE_NAME}"
 
