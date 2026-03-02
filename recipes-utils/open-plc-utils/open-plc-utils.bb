@@ -6,8 +6,6 @@ PACKAGE_STRIP = "no"
 
 RM_WORK_EXCLUDE += "${PN}"
 
-S = "${UNPACKDIR}/git"
-
 SRC_URI = "git://github.com/qca/open-plc-utils.git;protocol=https;branch=master \
 	   file://0001-slac-fix-cm_mnbc_sound_indicate-not-according-to-spe.patch \
 	   file://0002-slac-fix-RND-field-incorrect-size-inside-session-str.patch \
