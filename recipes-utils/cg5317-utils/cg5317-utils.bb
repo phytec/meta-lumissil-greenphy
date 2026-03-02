@@ -1,7 +1,9 @@
 DESCRIPTION = "Layer includes the services to initialize CG5317 in host loading mode"
 
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://../COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
+LIC_FILES_CHKSUM = "file://COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
+
+S = "${UNPACKDIR}"
 
 SRC_URI = " \
 	file://25-seth0.network \
