@@ -17,7 +17,7 @@ S = "${UNPACKDIR}"
 
 KERNEL_MODULE_AUTOLOAD += "${MODULE_NAME}"
 
-FILES_${PN} = " \
+FILES:${PN} = " \
 	/lib/modules/${KERNEL_VERSION}/kernel/${MODULE_NAME} \
 	${sysconfdir}/modules-load.d/${MODULE_NAME}.conf \
 "
