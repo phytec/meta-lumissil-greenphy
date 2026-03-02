@@ -2,7 +2,9 @@ DESCRIPTION = "Open PLC utils"
 HOMEPAGE = "https://github.com/qca/open-plc-utils"
 LICENSE = "BSD-3-Clause-Clear"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=7d83a9e9a9788beb9357262af385f6c7"
-PACKAGE_STRIP = "no"
+
+WARN_QA:append = " patch-status"
+ERROR_QA:remove = "patch-status"
 
 RM_WORK_EXCLUDE += "${PN}"
 
