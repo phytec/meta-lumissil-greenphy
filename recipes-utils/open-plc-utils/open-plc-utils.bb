@@ -18,6 +18,7 @@ SRC_URI = "git://github.com/qca/open-plc-utils.git;protocol=https;branch=master 
            file://0003-slac-send-CM_START_ATTEN.IND-three-times.patch \
            file://0004-rework-slac-code-to-support-multiple-device-situatio.patch \
            file://0005-fix-evse-not-accepting-EVs-SLAC-PARAMS-with-RunId-0x.patch \
+           file://0005-tools-types-h-drop-bool-mess-include-stdboolh-instead.patch \
            file://pev.ini \
            file://evse.ini \
            "
