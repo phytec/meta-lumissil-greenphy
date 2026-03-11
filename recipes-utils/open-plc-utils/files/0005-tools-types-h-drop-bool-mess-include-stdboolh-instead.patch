@@ -1,0 +1,62 @@
+From cbf52f68b5e2ab0c4071600ab34126120e54f5cd Mon Sep 17 00:00:00 2001
+From: Michael Heimpold <mhei@heimpold.de>
+Date: Tue, 18 Feb 2025 19:54:03 +0100
+Subject: [PATCH] tools/types.h: drop bool mess - include stdbool.h instead
+
+Instead of trying to deal with bool stuff ourselv, just
+rely on the stdbool.h and use it instead.
+
+This fixes compilation with gcc 15 as reported in #187.
+
+Signed-off-by: Michael Heimpold <mhei@heimpold.de>
+---
+ tools/types.h | 28 +---------------------------
+ 1 file changed, 1 insertion(+), 27 deletions(-)
+
+diff --git a/tools/types.h b/tools/types.h
+index 45f2d739..711b9309 100644
+--- a/tools/types.h
++++ b/tools/types.h
+@@ -23,6 +23,7 @@
+  *--------------------------------------------------------------------*/
+ 
+ #include <stdint.h>
++#include <stdbool.h>
+ 
+ /*====================================================================*
+  *   constants;
+@@ -66,33 +67,6 @@ typedef signed errno_t;
+ typedef signed signo_t;
+ typedef unsigned char byte;
+ 
+-/*====================================================================*
+- *   define C++ style true and false for use in standard C programs;
+- *--------------------------------------------------------------------*/
+-
+-#ifndef __cplusplus
+-
+-#ifdef false
+-# undef false
+-#endif
+-#ifdef true
+-# undef true
+-#endif
+-#ifdef bool
+-# undef bool
+-#endif
+-
+-typedef enum
+-
+-{
+-	false,
+-	true
+-}
+-
+-bool;
+-
+-#endif
+-
+ /*====================================================================*
+  *   cope with structure packing vagaries;
+  *--------------------------------------------------------------------*/
+
